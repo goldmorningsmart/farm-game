@@ -1,13 +1,14 @@
 <template>
-  <div class="p-4 bg-blue-50 rounded shadow w-full max-w-[600px] relative mx-auto">
+  <div class="p-4 bg-blue-50 rounded shadow w-full relative mx-auto">
 
     <div v-if="inventory.items.length === 0" class="text-gray-500 text-center">
       空空如也...
     </div>
 
     <!-- 网格布局（手机 2 列，平板 3 列，桌面 4 列） -->
-    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-      <el-tooltip v-for="item in pagedItems" :key="item.id" class="relative " :hide-after="0" :show-after="0"  effect="dark" placement="top">
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 xl:grid-cols-6">
+      <el-tooltip v-for="item in pagedItems" :key="item.id" class="relative " :hide-after="0" :show-after="0"
+        effect="dark" placement="top">
         <template #content>
           <div class="max-w-[100px]">
             {{ item.desc || '没有描述' }}
@@ -27,16 +28,19 @@
           <span class="absolute top-1 right-1 bg-green-600 text-white text-xs px-1 rounded-full">
             {{ item.count }}
           </span>
-            <!-- 价格信息 -->
-          <div  v-if="sellMode" class="absolute top-1 left-1 text-xs text-yellow-700">
+          <!-- 价格信息 -->
+          <div v-if="sellMode" class="absolute top-1 left-1 text-xs text-yellow-700">
             💰{{ item.sellPrice }}
           </div>
           <!-- 出售数量微型控件 -->
           <div v-if="sellMode" class="mt-1 flex justify-center items-center gap-1 text-sm">
-            <button class="w-5 h-5 bg-gray-300 rounded text-xs" @click.stop="decrease(item)">-</button>
+            <button class="w-5 h-5 bg-gray-300 rounded text-xs"
+              :disabled="item.tradeLimit === 2 || item.tradeLimit === 3" @click.stop="decrease(item)">-</button>
             <span class="w-6 text-center">{{ sellSelections[item.id] || 0 }}</span>
-            <button class="w-5 h-5 bg-gray-300 rounded text-xs" @click.stop="increase(item)">+</button>
+            <button class="w-5 h-5 bg-gray-300 rounded text-xs"
+              :disabled="item.tradeLimit === 2 || item.tradeLimit === 3" @click.stop="increase(item)">+</button>
           </div>
+
 
         </div>
       </el-tooltip>
@@ -45,7 +49,7 @@
     <!-- 分页 -->
     <div class="flex justify-center mt-4">
       <el-pagination v-model:current-page="currentPage" :page-size="pageSize" :total="inventory.items.length"
-        layout="prev, pager, next" small />
+        layout="prev, pager, next" size="small" />
     </div>
 
     <!-- 底部出售栏 -->
@@ -68,7 +72,7 @@
 
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useInventoryStore } from '@/stores/inventory'
 import { useGameStore } from '@/stores/game'
 import { ElMessage } from "element-plus"
@@ -81,13 +85,35 @@ const sellMode = ref(false)
 const sellSelections = ref({})  // { itemId: 数量 }
 
 const currentPage = ref(1)
-const pageSize = 12  // 每页显示 12 个（4x3）
+const pageSize = ref(12)  // 每页显示 12 个（4x3）
+function syncPageSize() {
+  if (window.innerWidth < 768) { pageSize.value = 4 }
+  else if (window.innerWidth < 1280) { pageSize.value = 12 }
+  else { pageSize.value = 18 }
+  const maxPage = Math.ceil(inventory.items.length / pageSize.value) - 1
+  if (currentPage.value > maxPage) currentPage.value = Math.max(maxPage, 0)
+}
+// 监听窗口大小变化
+let timer = null
+const onResize = () => {
+  clearTimeout(timer)
+  timer = setTimeout(syncPageSize, 100) // 简单防抖
+}
 
+onMounted(() => {
+  syncPageSize()
+  window.addEventListener('resize', onResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize)
+})
 // 当前页物品
 const pagedItems = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return inventory.items.slice(start, start + pageSize)
+  const start = (currentPage.value - 1) * pageSize.value
+  return inventory.items.slice(start, start + pageSize.value)
 })
+
 
 // 预计总价
 const totalSellPrice = computed(() => {
@@ -142,19 +168,19 @@ function confirmSell() {
 }
 function getBgClass(level) {
   switch (level) {
-    case 1: 
+    case 1:
       return "bg-white border-2 border-gray-300" // 白
-    case 2: 
+    case 2:
       return "bg-green-100 border-2 border-green-500" // 绿
-    case 3: 
+    case 3:
       return "bg-blue-100 border-2 border-blue-500"   // 蓝
-    case 4: 
+    case 4:
       return "bg-purple-100 border-2 border-purple-500" // 紫
-    case 5: 
+    case 5:
       return "bg-red-100 border-2 border-red-500"     // 红
-    case 6: 
+    case 6:
       return "bg-amber-100 border-2 border-amber-500" // 金
-    default: 
+    default:
       return "bg-white border border-gray-300"
   }
 }

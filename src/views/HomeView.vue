@@ -1,7 +1,8 @@
 <template>
   <div class="h-screen bg-gradient-to-b from-green-100 to-green-300 p-6">
     <!-- 返回按钮 -->
-    <el-button type="primary" @click="router.push('/farm')" class="mb-4">🏡 返回农场</el-button>
+    <el-button type="primary" @click="router.push('/farm')"
+      class="absolute bottom-1 flex flex-col items-center cursor-pointer">🏡 农场</el-button>
 
     <!-- 玩家信息 -->
     <div class="flex items-center space-x-4 mb-6">
@@ -19,66 +20,29 @@
       <!-- 标题固定在顶部，不随内容滚动 -->
       <h2 class="text-lg font-bold mb-4 flex-none">🏠 我的建筑物</h2>
 
-      <!-- 仅列表区域滚动 -->
       <el-scrollbar class="flex-1 min-h-0" height="100%" wrap-class="overflow-x-hidden"
         view-class="max-w-full overflow-x-hidden">
-        <!-- 用与 gutter/2 相同的左右 padding 来“抵消” el-row 的负外边距 -->
-        <div class="px-2 sm:px-2"> <!-- gutter = 16 => 16/2 = 8px ≈ px-2 -->
-          <el-row :gutter="16" class="w-full" style="margin-left:0;margin-right:0">
-            <el-col v-for="building in buildings" :key="building.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="4"
-              class="mb-4">
-              <div
-                class="bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col items-center p-4 h-96"
-                @click="openRecipes(building)">
-                <img v-if="building.icon" :src="building.icon" class="w-16 h-16 mb-2 object-contain"
-                  alt="building icon" />
-                <h3 class="text-lg font-bold text-center">
-                  {{ building.name }} (Lv.{{ building.level }})
-                </h3>
-                <p class="text-xs text-gray-600 text-center">
-                  {{ building.description }}
-                </p>
+        <div class="px-2 sm:px-2">
 
-                <div v-if="building.productionQueue.length" class="mt-2 w-full">
-                  <h4 class="text-sm font-semibold text-gray-700 mb-1">生产中:</h4>
+          <!-- 桌面端：网格布局 -->
+          <div v-if="!isMobile">
+            <el-row :gutter="16" class="w-full" style="margin-left:0;margin-right:0">
+              <el-col v-for="b in buildings" :key="b.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb-4">
+                <BuildingCard :building="b" @open-recipes="openRecipes" @cancel-task="cancelTask" />
+              </el-col>
+            </el-row>
+          </div>
 
-                  <div v-for="(task, index) in building.productionQueue.slice(0, 5)" :key="task.recipeId + '-' + index"
-                    class="flex items-center gap-2 p-2 mb-1 bg-gray-50 rounded-lg shadow-sm">
-                    <!-- 配方图标 -->
-                    <img v-if="task.productIcon" :src="task.productIcon" class="w-6 h-6 object-contain"
-                      alt="task icon" />
+          <!-- 手机端：轮播单卡片 -->
+          <div v-else>
+            <el-carousel :interval="0" arrow="always" height="420px" indicator-position="outside" indicator-type="dot">
+              <el-carousel-item v-for="b in buildings" :key="b.id">
+                <BuildingCard :building="b" @open-recipes="openRecipes" @cancel-task="cancelTask" />
+              </el-carousel-item>
+            </el-carousel>
 
-                    <!-- 名称 + 数量 -->
-                    <div class="flex-1">
-                      <div class="text-xs font-bold text-gray-800 truncate">
-                        {{ task.name }} ×{{ task.count }}
-                      </div>
+          </div>
 
-                      <!-- 剩余时间 + 进度条 -->
-                      <div class="flex items-center gap-1 text-[10px] text-gray-500">
-                        <span>{{ formatTime(task.remainingTime) }}</span>
-                        <el-progress
-                          :percentage="Math.max(0, Math.round(((task.baseTime - task.remainingTime) / task.baseTime) * 100))"
-                          :stroke-width="6" status="" class="flex-1" />
-                      </div>
-                    </div>
-
-                    <!-- 取消按钮 -->
-                    <el-button type="danger" size="small" circle plain @click.stop="cancelTask(building, index)">
-                      x
-                    </el-button>
-                  </div>
-
-                  <!-- 超过 5 个的提示 -->
-                  <div v-if="building.productionQueue.length > 5" class="text-xs text-gray-500 italic">
-                    还有 {{ building.productionQueue.length - 5 }} 个任务排队中...
-                  </div>
-                </div>
-
-
-              </div>
-            </el-col>
-          </el-row>
         </div>
       </el-scrollbar>
     </div>
@@ -115,14 +79,14 @@
     </el-dialog>
 
     <!-- 背包模态框 -->
-    <el-dialog v-model="inventoryVisible" title="我的仓库" width="460px" :close-on-click-modal="false">
+    <el-dialog v-model="inventoryVisible" title="我的仓库" :close-on-click-modal="false" class="market-dialog">
       <Inventory />
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue"
+import { ref, computed, watch, onMounted } from "vue"
 import Inventory from "@/components/InventorySysterm.vue"
 import { productionRecipes } from "@/game/productionRecipes.js"
 import { itemInfoList } from "@/game/itemInfoList.js"
@@ -131,6 +95,15 @@ import { useInventoryStore } from "@/stores/inventory.js"
 import { useBuildingStore } from "@/stores/buildingStore.js"
 import { ElMessage } from "element-plus"
 import { useRouter } from "vue-router"
+import BuildingCard from "@/components/BuildingCard.vue"
+const isMobile = ref(false)
+onMounted(() => {
+  const check = () => {
+    isMobile.value = window.innerWidth < 640 // Tailwind sm 断点
+  }
+  check()
+  window.addEventListener("resize", check)
+})
 
 const game = useGameStore()
 const inventoryStore = useInventoryStore()
@@ -183,8 +156,9 @@ function openRecipes(building) {
   selectedBuilding.value = building
   recipeVisible.value = true
 }
-function cancelTask(building, index) {
-  building.cancelProduction(index, inventoryStore)
+function cancelTask(task) {
+
+  task.building.cancelProduction(task.index, inventoryStore)
 }
 // 点击生产按钮
 function produce(recipe) {
@@ -219,16 +193,6 @@ function produce(recipe) {
   }
 }
 
-function formatTime(seconds) {
-  if (seconds <= 0) return "0s"
-  const h = Math.floor(seconds / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  const s = Math.floor(seconds % 60)
-  const pad = (n) => String(n).padStart(2, "0")
-  if (h > 0) return `${pad(h)}:${pad(m)}:${pad(s)}`
-  else if (m > 0) return `${pad(m)}:${pad(s)}`
-  else return `${s}s`
-}
 
 function nextPage() {
   if (currentPage.value < totalPages.value) currentPage.value++
@@ -240,3 +204,42 @@ function prevPage() {
 
 
 </script>
+
+<style>
+/* ≥640px（Tailwind 的 sm 断点）后 60% */
+@media (min-width: 768px) {
+  .market-dialog {
+    --el-dialog-width: 80% !important;
+  }
+}
+
+@media (min-width: 1080px) {
+  .market-dialog {
+    --el-dialog-width: 60% !important;
+  }
+}
+
+.custom-carousel .el-carousel__indicators {
+  bottom: 10px;
+  /* 底部距离 */
+  justify-content: center;
+  /* 居中 */
+}
+
+.custom-carousel .el-carousel__indicator button {
+  width: 40px;
+  /* 导航条宽度 */
+  height: 4px;
+  /* 导航条高度，加粗 */
+  border-radius: 2px;
+  background-color: #ccc;
+  opacity: 0.6;
+  transition: all 0.3s;
+}
+
+.custom-carousel .el-carousel__indicator.is-active button {
+  background-color: #333;
+  /* 选中颜色 */
+  opacity: 1;
+}
+</style>

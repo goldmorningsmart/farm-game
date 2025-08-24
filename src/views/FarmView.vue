@@ -10,7 +10,7 @@
     </div>
 
     <!-- 集市购买页面（模态框） -->
-    <el-dialog v-model="showMarket" title="集市" width="650px" :close-on-click-modal="false" class="ui-layer">
+    <el-dialog v-model="showMarket" title="集市" :close-on-click-modal="false" class="ui-layer market-dialog">
       <MarketSysterm />
     </el-dialog>
 
@@ -22,17 +22,18 @@
 
 
     <!-- 背包按钮 -->
-    <el-button class="absolute top-4 right-4 z-50 ui-layer" type="warning" @click="inventoryVisible = true" >
+    <el-button class="absolute top-4 right-4 z-50 ui-layer " type="warning" @click="inventoryVisible = true">
       仓库
     </el-button>
 
     <!-- 背包模态窗 -->
-    <el-dialog v-model="inventoryVisible" title="我的仓库" width="460px" :close-on-click-modal="false">
+    <el-dialog v-model="inventoryVisible" title="我的仓库" :close-on-click-modal="false" class="ui-layer market-dialog">
       <Inventory />
     </el-dialog>
 
     <!-- 种植选择菜单 -->
-    <div v-if="popoverVisible" class="absolute bg-black bg-opacity-90 text-white rounded p-3 w-64 z-50 shadow-lg ui-layer"
+    <div v-if="popoverVisible" ref="popoverRef"
+      class="absolute bg-black bg-opacity-90 text-white rounded p-3 w-64 z-50 shadow-lg ui-layer"
       :style="{ left: popoverPosition.x + 'px', top: popoverPosition.y + 'px' }" @click.stop>
       <p class="font-bold mb-2 text-center">选择要种植的作物:</p>
       <div class="grid grid-cols-3 gap-2">
@@ -50,11 +51,12 @@
         <el-button size="small" :disabled="currentPage === totalPages" @click="nextPage">下一页</el-button>
       </div>
     </div>
+
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted ,watch} from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch,nextTick } from 'vue'
 import Phaser from 'phaser'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
@@ -175,6 +177,38 @@ function harvestCropAt(index) {
   if (crop.label) crop.label.destroy()
   game.farm[index] = null
 }
+const popoverRef = ref(null)
+
+function showPopoverAt(tileSprite, index) {
+  // 初始位置（先设置到点击点）
+  popoverPosition.value = {
+    x: tileSprite.x + phaserContainer.value.getBoundingClientRect().left,
+    y: tileSprite.y + phaserContainer.value.getBoundingClientRect().top
+  }
+
+  popoverVisible.value = true
+  selectedTileIndex.value = index
+  currentPage.value = 1
+  isPopoverActive = true
+
+  // 等 DOM 真正渲染完成后再修正
+  nextTick(() => {
+    const popoverEl = popoverRef.value
+    if (popoverEl) {
+      const { innerWidth, innerHeight } = window
+      const rect = popoverEl.getBoundingClientRect()
+      let { x, y } = popoverPosition.value
+
+      if (x + rect.width > innerWidth) x = innerWidth - rect.width - 10
+      if (y + rect.height > innerHeight) y = innerHeight - rect.height - 10
+      if (x < 10) x = 10
+      if (y < 10) y = 10
+
+      popoverPosition.value = { x, y }
+    }
+  })
+}
+
 
 import farmBg from '@/assets/farm_bg.png'
 import farmTile from '@/assets/farm_tile.png'
@@ -217,16 +251,10 @@ class FarmScene extends Phaser.Scene {
 
         // 点击空白位置弹出种植菜单
         tileSprite.on('pointerdown', () => {
+          if (document.querySelector(".ui-layer:hover")) return;
           const crop = game.farm[index]
           if (!crop) {
-            popoverPosition.value = {
-              x: tileSprite.x + phaserContainer.value.getBoundingClientRect().left,
-              y: tileSprite.y + phaserContainer.value.getBoundingClientRect().top
-            }
-            popoverVisible.value = true
-            selectedTileIndex.value = index
-            currentPage.value = 1
-            isPopoverActive = true
+            showPopoverAt(tileSprite, index) 
           }
         })
 
@@ -247,9 +275,9 @@ class FarmScene extends Phaser.Scene {
 
           // 成熟作物可点击收获
           img.setInteractive()
-          img.on('pointerdown', () => { if (crop.isMature()) harvestCropAt(index) })
-          img.on('pointerover', () => { if (crop.isMature()) phaserGame.canvas.style.cursor = 'pointer' })
-          img.on('pointerout', () => { phaserGame.canvas.style.cursor = 'default' })
+          img.on('pointerdown', () => { if (document.querySelector(".ui-layer:hover")) return; if (crop.isMature()) harvestCropAt(index) })
+          img.on('pointerover', () => { if (document.querySelector(".ui-layer:hover")) return; if (crop.isMature()) phaserGame.canvas.style.cursor = 'pointer' })
+          img.on('pointerout', () => { if (document.querySelector(".ui-layer:hover")) return; phaserGame.canvas.style.cursor = 'default' })
         }
       }
     }
@@ -275,14 +303,14 @@ class FarmScene extends Phaser.Scene {
 }
 
 onMounted(() => {
-    phaserGame = new Phaser.Game({
-      type: Phaser.AUTO,
-      width: phaserContainer.value.clientWidth,
-      height: phaserContainer.value.clientHeight,
-      parent: phaserContainer.value,
-      backgroundColor: 0xa7d177,
-      scene: FarmScene
-    })
+  phaserGame = new Phaser.Game({
+    type: Phaser.AUTO,
+    width: phaserContainer.value.clientWidth,
+    height: phaserContainer.value.clientHeight,
+    parent: phaserContainer.value,
+    backgroundColor: 0xa7d177,
+    scene: FarmScene
+  })
 })
 
 // 组件卸载时清除
@@ -314,5 +342,23 @@ watch(
 
 .ui-layer {
   pointer-events: auto;
+}
+
+/* 手机端：90% */
+.market-dialog {
+  --el-dialog-width: 90% !important;
+}
+
+/* ≥640px（Tailwind 的 sm 断点）后 60% */
+@media (min-width: 768px) {
+  .market-dialog {
+    --el-dialog-width: 80% !important;
+  }
+}
+
+@media (min-width: 1080px) {
+  .market-dialog {
+    --el-dialog-width: 60% !important;
+  }
 }
 </style>

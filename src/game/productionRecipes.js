@@ -58,44 +58,44 @@ export const productionRecipes = [
     product: { id: 20409, count: 1 },
     productionTime: 14400
   },
-    {
+  {
     id: 40504,
     name: "金条",
     buildingId: 30005,
     materials: [
       { id: 20401, count: 12 },
-      { id: 20412, count: 5 },
+      { id: 20410, count: 5 },
     ],
-    product: { id: 20413, count: 1 },
+    product: { id: 20411, count: 1 },
     productionTime: 28800
   },
   //魔偶
-    {
+  {
     id: 40601,
     name: "石头",
     buildingId: 30006,
     materials: [
-      { id: 20410, count: 1 },
+      { id: 20412, count: 1 },
     ],
     product: { id: 20402, count: 100 },
     productionTime: 36000
   },
-      {
+  {
     id: 40602,
     name: "铁矿石",
     buildingId: 30006,
     materials: [
-      { id: 20410, count: 1 },
+      { id: 20412, count: 1 },
     ],
     product: { id: 20403, count: 60 },
     productionTime: 36000
   },
-      {
+  {
     id: 40603,
     name: "铜矿石",
     buildingId: 30006,
     materials: [
-      { id: 20410, count: 1 },
+      { id: 20412, count: 1 },
     ],
     product: { id: 20404, count: 40 },
     productionTime: 36000
@@ -105,19 +105,19 @@ export const productionRecipes = [
     name: "银矿石",
     buildingId: 30006,
     materials: [
-      { id: 20410, count: 1 },
+      { id: 20412, count: 1 },
     ],
     product: { id: 20408, count: 10 },
     productionTime: 36000
   },
-    {
+  {
     id: 40605,
     name: "金矿石",
     buildingId: 30006,
     materials: [
-      { id: 20410, count: 1 },
+      { id: 20412, count: 1 },
     ],
-    product: { id: 20412, count: 1 },
+    product: { id: 20410, count: 1 },
     productionTime: 36000
   },
   //祭坛
@@ -128,7 +128,7 @@ export const productionRecipes = [
     materials: [
       { id: 20104, count: 10 },
     ],
-    product: { id: 20410, count: 1 },
+    product: { id: 20412, count: 1 },
     productionTime: 36000
   },
   //劈材坊

@@ -90,8 +90,8 @@ export class Building {
 
         // 返还材料
         for (const m of recipe.materials) {
-            // 返还材料 *生产数量倍数*，否则用户亏了
-            const returnCount = m.count * task.count
+            // 返还材料 
+            const returnCount = m.count
             inventoryStore.addItem({ id: m.id, count: returnCount })
         }
 

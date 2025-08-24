@@ -1,33 +1,23 @@
 <template>
-  <div class="flex h-screen items-center justify-center"
-  style="background: url('./start.png') center/cover no-repeat">
-    <el-card class="w-96 shadow-lg rounded-[2rem] overflow-hidden">
+  <div class="flex h-screen items-center justify-center" style="background: url('./start.png') center/cover no-repeat">
+    <el-card class="w-96 shadow-2xl rounded-[2rem] overflow-hidden bg-white/30 backdrop-blur-lg border border-white/20">
       <h2 class="text-xl font-bold mb-6 text-center">欢迎来到Vue农场</h2>
       <el-form :model="form" ref="formRef" label-width="80px" status-icon>
-        <el-form-item
-          label="用户名"
-          prop="username"
-          :rules="[{ required: true, message: '请输入用户名', trigger: 'blur' }]"
-        >
+        <el-form-item label="用户名" prop="username" :rules="[{ required: true, message: '请输入用户名', trigger: 'blur' }]">
           <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="密码"
-          prop="password"
-          :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]"
-        >
+        <el-form-item label="密码" prop="password" :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]">
           <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
         </el-form-item>
 
-        <el-form-item>
-          <el-checkbox v-model="rememberMe">记住我</el-checkbox>
-        </el-form-item>
-
-        <el-form-item>
-          <el-button type="success" class="w-full" @click="handleLogin">登录</el-button>
-        </el-form-item>
       </el-form>
+      <el-form-item>
+        <el-checkbox v-model="rememberMe">记住我</el-checkbox>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="success" class="w-full items-center" @click="handleLogin">登录</el-button>
+      </el-form-item>
     </el-card>
   </div>
 </template>

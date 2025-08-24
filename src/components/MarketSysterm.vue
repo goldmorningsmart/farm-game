@@ -1,9 +1,10 @@
 <template>
-  <div class="p-4 bg-blue-50 rounded shadow w-full max-w-[600px] relative mx-auto">
+  <div class="p-4 bg-blue-50 rounded shadow w-full relative mx-auto">
 
     <!-- 物品网格 -->
-    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-      <el-tooltip v-for="item in pagedItems" :key="item.id" class="relative" :hide-after="0" :show-after="0" effect="dark" placement="top">
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 xl:grid-cols-6">
+      <el-tooltip v-for="item in pagedItems" :key="item.id" class="relative" :hide-after="0" :show-after="0"
+        effect="dark" placement="top">
         <template #content>
           <div class="max-w-[100px]">
             {{ item.desc || '没有描述' }}
@@ -36,13 +37,8 @@
 
     <!-- 分页 -->
     <div class="flex justify-center mt-4">
-      <el-pagination
-        v-model:current-page="currentPage"
-        :page-size="pageSize"
-        :total="itemInfoList.length"
-        layout="prev, pager, next"
-        small
-      />
+      <el-pagination v-model:current-page="currentPage" :page-size="pageSize" :total="filteredItemCount"
+        layout="prev, pager, next" size="small" />
     </div>
 
     <!-- 底部购买栏 -->
@@ -59,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useInventoryStore } from '@/stores/inventory'
 import { useGameStore } from '@/stores/game'
 import { ElMessage } from "element-plus"
@@ -73,12 +69,42 @@ const selectedItem = ref(null)
 const buySelections = ref({})  // { itemId: 数量 }
 
 const currentPage = ref(1)
-const pageSize = 12  // 每页显示 12 个
+const pageSize = ref(9)  // 每页显示 12 个
 
-// 当前页物品
+// 根据屏幕宽度动态设置 pageSize
+function syncPageSize() {
+  if (window.innerWidth < 768) { pageSize.value = 4 }
+  else if (window.innerWidth < 1280) { pageSize.value = 12 }
+  else { pageSize.value = 18 }
+  const maxPage = Math.ceil(inventory.items.length / pageSize.value) - 1
+  if (currentPage.value > maxPage) currentPage.value = Math.max(maxPage, 0)
+}
+// 监听窗口大小变化
+let timer = null
+const onResize = () => {
+  clearTimeout(timer)
+  timer = setTimeout(syncPageSize, 100) // 简单防抖
+}
+
+onMounted(() => {
+  syncPageSize()
+  window.addEventListener('resize', onResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize)
+})
+
 const pagedItems = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return itemInfoList.slice(start, start + pageSize)
+  // 先过滤掉 tradeLimit 为 1 或 3 的物品
+  const filtered = itemInfoList.filter(item => item.tradeLimit !== 1 && item.tradeLimit !== 3)
+  const start = (currentPage.value - 1) * pageSize.value
+  return filtered.slice(start, start + pageSize.value)
+})
+
+// 过滤后的总数（用于分页）
+const filteredItemCount = computed(() => {
+  return itemInfoList.filter(item => item.tradeLimit !== 1 && item.tradeLimit !== 3).length
 })
 
 // 预计总价
@@ -117,7 +143,7 @@ function confirmBuy() {
   for (const item of itemInfoList) {
     const count = buySelections.value[item.id] || 0
     if (count > 0) {
-      inventory.addItem({id:item.id, count:count}) // 需要 store 有 addItem 方法
+      inventory.addItem({ id: item.id, count: count }) // 需要 store 有 addItem 方法
     }
   }
 

@@ -15,6 +15,7 @@ export class Item {
       this.buyPrice = info.buyPrice
       this.sellPrice  = info.sellPrice
       this.level = info.level
+      this.tradeLimit = info.tradeLimit
     } else {
       this.name = `未知物品(${id})`
       this.icon = '/assets/items/unknown.png'
