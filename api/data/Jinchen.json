@@ -1,0 +1,296 @@
+{
+    "password": "$2y$10$zc9ok9xJPTINl6rC\/xBwxeMFuD7h4fnFa1\/aYlAnAmS1GXpDXJ9v2",
+    "save": {
+        "coins": 297,
+        "farm": [
+            {
+                "uuid": "1bf1e2e7-8e3c-4684-8f4c-c555f2dc5414",
+                "id": 10001,
+                "elapsedTime": 3621.0006666666904,
+                "fruitCount": 20,
+                "tileIndex": 0
+            },
+            {
+                "uuid": "e10ff91d-b5db-4026-b2f3-1a030c67a72b",
+                "id": 10002,
+                "elapsedTime": 2421.0006666666904,
+                "fruitCount": 4,
+                "tileIndex": 1
+            },
+            {
+                "uuid": "e6225533-0395-45b8-b558-b067390904a8",
+                "id": 10006,
+                "elapsedTime": 1821.000666666608,
+                "fruitCount": 7,
+                "tileIndex": 2
+            },
+            {
+                "uuid": "76a09149-6fc0-427c-b88c-ce7bdfe71575",
+                "id": 10008,
+                "elapsedTime": 921.0006666666841,
+                "fruitCount": 24,
+                "tileIndex": 3
+            },
+            {
+                "uuid": "f4f6a935-5de3-4d2f-9504-3f188c2b2beb",
+                "id": 10001,
+                "elapsedTime": 3621.0006666666904,
+                "fruitCount": 18,
+                "tileIndex": 4
+            },
+            {
+                "uuid": "402ca333-4bf6-47ca-ba39-365c2fb5d550",
+                "id": 10002,
+                "elapsedTime": 2421.0006666666904,
+                "fruitCount": 5,
+                "tileIndex": 5
+            },
+            {
+                "uuid": "e4a142d7-ea8a-4c69-8b29-2c0f380f0d76",
+                "id": 10006,
+                "elapsedTime": 1821.000666666608,
+                "fruitCount": 9,
+                "tileIndex": 6
+            },
+            {
+                "uuid": "554e9636-c361-47ee-b0bd-50202963ffdd",
+                "id": 10008,
+                "elapsedTime": 921.0006666666841,
+                "fruitCount": 27,
+                "tileIndex": 7
+            },
+            {
+                "uuid": "1b68c95c-aebb-4fc9-8ed5-7345fde3151e",
+                "id": 10001,
+                "elapsedTime": 3621.0006666666904,
+                "fruitCount": 11,
+                "tileIndex": 8
+            },
+            {
+                "uuid": "d069a171-17e3-4675-9ce6-edfbffefa64b",
+                "id": 10002,
+                "elapsedTime": 2421.0006666666904,
+                "fruitCount": 6,
+                "tileIndex": 9
+            },
+            {
+                "uuid": "2bb53086-efe1-47fc-9c27-64217d36f3f1",
+                "id": 10006,
+                "elapsedTime": 1821.000666666608,
+                "fruitCount": 9,
+                "tileIndex": 10
+            },
+            {
+                "uuid": "bc7e2e5c-3c32-451e-9b08-48bb72c1b6a3",
+                "id": 10008,
+                "elapsedTime": 921.0006666666841,
+                "fruitCount": 21,
+                "tileIndex": 11
+            }
+        ],
+        "inventory": [
+            {
+                "id": 20107,
+                "count": 158
+            },
+            {
+                "id": 20102,
+                "count": 82
+            },
+            {
+                "id": 20105,
+                "count": 425
+            },
+            {
+                "id": 20101,
+                "count": 99
+            },
+            {
+                "id": 20201,
+                "count": 15
+            },
+            {
+                "id": 20401,
+                "count": 244
+            },
+            {
+                "id": 20103,
+                "count": 50
+            },
+            {
+                "id": 20108,
+                "count": 9
+            },
+            {
+                "id": 20104,
+                "count": 421
+            },
+            {
+                "id": 20106,
+                "count": 15
+            },
+            {
+                "id": 20301,
+                "count": 10
+            },
+            {
+                "id": 20410,
+                "count": 4
+            }
+        ],
+        "buildings": [
+            {
+                "id": 30001,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": [
+                    {
+                        "recipeId": 40101,
+                        "name": "小麦粉",
+                        "remainingTime": 841,
+                        "count": 1,
+                        "productId": 20201,
+                        "baseTime": 900,
+                        "productIcon": ".\/assets\/items\/wheat_flour.png"
+                    },
+                    {
+                        "recipeId": 40101,
+                        "name": "小麦粉",
+                        "remainingTime": 900,
+                        "count": 1,
+                        "productId": 20201,
+                        "baseTime": 900,
+                        "productIcon": ".\/assets\/items\/wheat_flour.png"
+                    },
+                    {
+                        "recipeId": 40101,
+                        "name": "小麦粉",
+                        "remainingTime": 900,
+                        "count": 1,
+                        "productId": 20201,
+                        "baseTime": 900,
+                        "productIcon": ".\/assets\/items\/wheat_flour.png"
+                    }
+                ]
+            },
+            {
+                "id": 30002,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": [
+                    {
+                        "recipeId": 40201,
+                        "name": "面包",
+                        "remainingTime": 1747,
+                        "count": 5,
+                        "productId": 20301,
+                        "baseTime": 1800,
+                        "productIcon": ".\/assets\/items\/bread.png"
+                    },
+                    {
+                        "recipeId": 40201,
+                        "name": "面包",
+                        "remainingTime": 1800,
+                        "count": 5,
+                        "productId": 20301,
+                        "baseTime": 1800,
+                        "productIcon": ".\/assets\/items\/bread.png"
+                    },
+                    {
+                        "recipeId": 40201,
+                        "name": "面包",
+                        "remainingTime": 1800,
+                        "count": 5,
+                        "productId": 20301,
+                        "baseTime": 1800,
+                        "productIcon": ".\/assets\/items\/bread.png"
+                    }
+                ]
+            },
+            {
+                "id": 30003,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30004,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30005,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": [
+                    {
+                        "recipeId": 40504,
+                        "name": "金条",
+                        "remainingTime": 28694,
+                        "count": 1,
+                        "productId": 20411,
+                        "baseTime": 28800,
+                        "productIcon": ".\/assets\/items\/gold_bar.png"
+                    }
+                ]
+            },
+            {
+                "id": 30006,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": [
+                    {
+                        "recipeId": 40605,
+                        "name": "金矿石",
+                        "remainingTime": 35876,
+                        "count": 1,
+                        "productId": 20410,
+                        "baseTime": 36000,
+                        "productIcon": ".\/assets\/items\/gold_ore.png"
+                    }
+                ]
+            },
+            {
+                "id": 30007,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": [
+                    {
+                        "recipeId": 40701,
+                        "name": "魔晶",
+                        "remainingTime": 35848,
+                        "count": 1,
+                        "productId": 20412,
+                        "baseTime": 36000,
+                        "productIcon": ".\/assets\/items\/crystal1.png"
+                    },
+                    {
+                        "recipeId": 40701,
+                        "name": "魔晶",
+                        "remainingTime": 36000,
+                        "count": 1,
+                        "productId": 20412,
+                        "baseTime": 36000,
+                        "productIcon": ".\/assets\/items\/crystal1.png"
+                    }
+                ]
+            },
+            {
+                "id": 30008,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            }
+        ],
+        "lastSaveTime": "2025-08-26T17:16:35.286Z"
+    }
+}

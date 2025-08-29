@@ -1,0 +1,65 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "main.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "main.json": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": -2314.5,
+                "y": -1301
+            }
+        },
+        "main.json#floor": {
+            "scaleInDock": 1
+        },
+        "main.json#plant": {
+            "scaleInDock": 1
+        },
+        "main.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": -2067,
+                "y": -1052
+            }
+        },
+        "main.tmx#floor": {
+            "scaleInDock": 1
+        },
+        "main.tmx#plant": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1.5
+        }
+    },
+    "last.exportedFilePath": "/Volumes/Data/vueProject/farm-game/map",
+    "last.imagePath": "/Volumes/Data/vueProject/farm-game/map/resource",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "main.tmx",
+        "main.json"
+    ],
+    "project": "forest.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "main.json",
+        "main.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 96,
+        "width": 96
+    }
+}

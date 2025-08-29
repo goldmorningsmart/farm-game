@@ -1,0 +1,274 @@
+{
+    "password": "$2y$10$9V.559v5Eo7.0vhhFF4LmuzbcEWxs3pl99izu1BKtYbCSyWiXUuMu",
+    "save": {
+        "coins": 60182000678,
+        "farm": [
+            null,
+            null,
+            null,
+            {
+                "uuid": "f32e18bc-b01c-4698-83d4-c5a0cb7b9774",
+                "id": 10006,
+                "elapsedTime": 1829.885468266636,
+                "fruitCount": 6,
+                "tileIndex": 3
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+                "uuid": "d575699f-dae3-448f-863b-bebe54675729",
+                "id": 10006,
+                "elapsedTime": 1829.885468266636,
+                "fruitCount": 7,
+                "tileIndex": 8
+            },
+            null,
+            null,
+            {
+                "uuid": "b7ad5952-bee4-433f-8f69-c7bfde24584d",
+                "id": 10008,
+                "elapsedTime": 929.8854682666355,
+                "fruitCount": 23,
+                "tileIndex": 11
+            }
+        ],
+        "inventory": [
+            {
+                "id": 20105,
+                "count": 31
+            },
+            {
+                "id": 20109,
+                "count": 1
+            },
+            {
+                "id": 20110,
+                "count": 2
+            },
+            {
+                "id": 20111,
+                "count": 5
+            },
+            {
+                "id": 20107,
+                "count": 29
+            },
+            {
+                "id": 20113,
+                "count": 2
+            },
+            {
+                "id": 20114,
+                "count": 3
+            },
+            {
+                "id": 20115,
+                "count": 3
+            },
+            {
+                "id": 20116,
+                "count": 3
+            },
+            {
+                "id": 20117,
+                "count": 6
+            },
+            {
+                "id": 20118,
+                "count": 3
+            },
+            {
+                "id": 20119,
+                "count": 3
+            },
+            {
+                "id": 20120,
+                "count": 3
+            },
+            {
+                "id": 20121,
+                "count": 3
+            },
+            {
+                "id": 20122,
+                "count": 5
+            },
+            {
+                "id": 20303,
+                "count": 2
+            },
+            {
+                "id": 20306,
+                "count": 2
+            },
+            {
+                "id": 20307,
+                "count": 2
+            },
+            {
+                "id": 20102,
+                "count": 19
+            },
+            {
+                "id": 20106,
+                "count": 2
+            },
+            {
+                "id": 20409,
+                "count": 1
+            },
+            {
+                "id": 20411,
+                "count": 1
+            },
+            {
+                "id": 20412,
+                "count": 2
+            },
+            {
+                "id": 20413,
+                "count": 1
+            },
+            {
+                "id": 20414,
+                "count": 1
+            },
+            {
+                "id": 20415,
+                "count": 1
+            },
+            {
+                "id": 20417,
+                "count": 1
+            },
+            {
+                "id": 20418,
+                "count": 3
+            },
+            {
+                "id": 20103,
+                "count": 4
+            },
+            {
+                "id": 20101,
+                "count": 7
+            },
+            {
+                "id": 20104,
+                "count": 5
+            },
+            {
+                "id": 20401,
+                "count": 20
+            }
+        ],
+        "buildings": [
+            {
+                "id": 30001,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30002,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30003,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30004,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30005,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30006,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": []
+            },
+            {
+                "id": 30007,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": [
+                    {
+                        "recipeId": 40701,
+                        "name": "魔晶",
+                        "remainingTime": 15823,
+                        "count": 1,
+                        "productId": 20412,
+                        "baseTime": 36000,
+                        "productIcon": ".\/assets\/items\/crystal1.png"
+                    },
+                    {
+                        "recipeId": 40701,
+                        "name": "魔晶",
+                        "remainingTime": 36000,
+                        "count": 1,
+                        "productId": 20412,
+                        "baseTime": 36000,
+                        "productIcon": ".\/assets\/items\/crystal1.png"
+                    }
+                ]
+            },
+            {
+                "id": 30008,
+                "level": 1,
+                "experience": 0,
+                "expToNextLevel": 100,
+                "productionQueue": [
+                    {
+                        "recipeId": 40802,
+                        "name": "木头",
+                        "remainingTime": 3469,
+                        "count": 10,
+                        "productId": 20401,
+                        "baseTime": 3600,
+                        "productIcon": ".\/assets\/items\/wood.png"
+                    },
+                    {
+                        "recipeId": 40802,
+                        "name": "木头",
+                        "remainingTime": 3600,
+                        "count": 10,
+                        "productId": 20401,
+                        "baseTime": 3600,
+                        "productIcon": ".\/assets\/items\/wood.png"
+                    },
+                    {
+                        "recipeId": 40802,
+                        "name": "木头",
+                        "remainingTime": 3600,
+                        "count": 10,
+                        "productId": 20401,
+                        "baseTime": 3600,
+                        "productIcon": ".\/assets\/items\/wood.png"
+                    }
+                ]
+            }
+        ],
+        "lastSaveTime": "2025-08-24T14:26:41.272Z"
+    }
+}

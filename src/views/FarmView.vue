@@ -20,6 +20,12 @@
       <img src="@/assets/home.png" class="w-16 h-16" />
     </div>
 
+        <!-- 森林按钮 -->
+    <div class="absolute top-1/4 flex flex-col items-center cursor-pointer" @click="goForest">
+      <span class="mt-1 text-white font-bold bg-black bg-opacity-50 px-2 py-0.5 rounded">森林</span>
+      <img src="@/assets/home.png" class="w-16 h-16" />
+    </div>
+
 
     <!-- 背包按钮 -->
     <el-button class="absolute top-4 right-4 z-50 ui-layer " type="warning" @click="inventoryVisible = true">
@@ -71,7 +77,7 @@ import MarketSysterm from "@/components/MarketSysterm.vue" // 刚才写的购买
 const showMarket = ref(false)
 const router = useRouter()
 const goHome = () => router.push('/home')
-
+const goForest = () => router.push('/forest')
 const game = useGameStore()
 const inventory = useInventoryStore()
 const inventoryVisible = ref(false)
