@@ -124,8 +124,8 @@ class GameScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true)
         this.player.maxHp = 100
         this.player.hp = 100
-this.player.body.setSize(20, 14)   // 宽 20，高 14，只覆盖脚底
-this.player.body.setOffset(12, 31) // 向右偏移 12px，向下偏移到脚底
+        this.player.body.setSize(20, 14)   // 宽 20，高 14，只覆盖脚底
+        this.player.body.setOffset(12, 31) // 向右偏移 12px，向下偏移到脚底
 
 
         // 动画（若用占位图也可播放）
@@ -429,5 +429,4 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-/**** 仅作演示 ****/
 </style>
